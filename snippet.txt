@@ -1,0 +1,6 @@
+https://www.baeldung.com/role-and-privilege-for-spring-security-registration
+https://bezkoder.com/spring-boot-mongodb-crud/
+https://github.com/Rosaa-xd/rosafiore/tree/master/blog-backend/src
+https://dev.to/shadowphoenix/securing-database-credentials-building-a-blog-1630
+
+https://bezkoder.com/spring-boot-jwt-auth-mongodb/
