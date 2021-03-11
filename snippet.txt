@@ -4,3 +4,5 @@ https://github.com/Rosaa-xd/rosafiore/tree/master/blog-backend/src
 https://dev.to/shadowphoenix/securing-database-credentials-building-a-blog-1630
 
 https://bezkoder.com/spring-boot-jwt-auth-mongodb/
+
+https://stackoverflow.com/questions/49654143/spring-security-5-there-is-no-passwordencoder-mapped-for-the-id-null

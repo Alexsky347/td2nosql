@@ -8,6 +8,5 @@ import java.util.List;
 public interface ArticleRepository extends MongoRepository<Article, String> {
 //    List<Article> findByUserId(String userId);
 //    List<Article> findByAuthorId(String authorId);
-    List<Article> findByPublished(boolean published);
     List<Article> findByCreated(Date created);
 }

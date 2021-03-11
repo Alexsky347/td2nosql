@@ -2,7 +2,7 @@ package com.example.td2nosql.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+
 
 import javax.management.relation.Role;
 import java.util.List;
@@ -10,6 +10,8 @@ import java.util.List;
 
 @Document(collection = "user")
 public class User {
+
+
     @Id
     private String id;
 
@@ -17,7 +19,7 @@ public class User {
 
     private String email;
 
-    private boolean published;
+    public String password;
 
     private Role role;
 
@@ -26,14 +28,14 @@ public class User {
 
     public User(){}
 
-    public User(String id, String username, String email, boolean published, Role role, List<Article> articles) {
-        this.id = id;
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
-        this.published = published;
+        this.password = password;
         this.role = role;
-        this.articles = articles;
+//        user.setRole(new Role(Integer.valueOf(1), user));
     }
+
 
     public String getId() {
         return id;
@@ -59,13 +61,9 @@ public class User {
         this.email = email;
     }
 
-    public boolean isPublished() {
-        return published;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public void setPublished(boolean published) {
-        this.published = published;
-    }
+    public String getPassword() { return password; }
 
     public Role getRole() {
         return role;
@@ -79,7 +77,4 @@ public class User {
         return articles;
     }
 
-    public void setArticles(List<Article> articles) {
-        this.articles = articles;
-    }
 }

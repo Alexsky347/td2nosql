@@ -1,5 +1,6 @@
 package com.example.td2nosql.model;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
@@ -12,16 +13,19 @@ public class Article {
 
     private String description;
 
-    private boolean published;
+    private boolean visible;
 
     private Date created;
 
+    @DBRef
+    private User user;
 
-    public Article(String title, String description, boolean published) {
+    public Article(String title, String description, User user) {
         this.title = title;
         this.description = description;
-        this.published = published;
+        this.visible = true;
         this.created = new Date();
+        this.user = user;
     }
     public Article(){}
 
@@ -49,12 +53,12 @@ public class Article {
         this.description = description;
     }
 
-    public boolean isPublished() {
-        return published;
+    public boolean isVisible() {
+        return visible;
     }
 
-    public void setPublished(boolean published) {
-        this.published = published;
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public Date getCreated() {
@@ -63,6 +67,13 @@ public class Article {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
