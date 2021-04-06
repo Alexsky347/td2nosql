@@ -64,11 +64,4 @@ public class ArticleController extends Exception{
     public void deleteAllTutorials() {
             articleRepository.deleteAll();
     }
-
-    @GetMapping("/findauthor")
-    @ResponseStatus(code=HttpStatus.OK)
-    public List<Article> findAuthor(@RequestParam String author){
-        return articleRepository.findArticlesByUserUsername(author);
-    }
-
 }
