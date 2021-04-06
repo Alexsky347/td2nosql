@@ -13,6 +13,8 @@ public class Article {
 
     private String description;
 
+    private String author;
+
     private boolean visible;
 
     private Date created;
@@ -20,7 +22,8 @@ public class Article {
     @DBRef
     private User user;
 
-    public Article(String title, String description, User user) {
+    public Article(String author, String title, String description, User user) {
+        this.author = author;
         this.title = title;
         this.description = description;
         this.visible = true;
@@ -76,4 +79,11 @@ public class Article {
         this.user = user;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }

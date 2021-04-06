@@ -1,5 +1,6 @@
 package com.example.td2nosql.controller;
 import com.example.td2nosql.model.Article;
+import com.example.td2nosql.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class ArticleController extends Exception{
     @PostMapping("/articles")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Article createArticle(@RequestBody Article articleArg) {
-        return articleRepository.save(new Article(articleArg.getTitle(), articleArg.getDescription(), articleArg.getUser()));
+        return articleRepository.save(new Article(articleArg.getAuthor(), articleArg.getTitle(), articleArg.getDescription(), articleArg.getUser()));
     }
 
     @PutMapping("/articles/{id}")
@@ -42,6 +43,7 @@ public class ArticleController extends Exception{
 
         if (article.isPresent()) {
             Article _article = article.get();
+            _article.setAuthor(articleArg.getAuthor());
             _article.setTitle(articleArg.getTitle());
             _article.setDescription(articleArg.getDescription());
             _article.setVisible(articleArg.isVisible());
@@ -63,9 +65,10 @@ public class ArticleController extends Exception{
             articleRepository.deleteAll();
     }
 
-//    @GetMapping("/articles/published")
-//    public ResponseEntity<List<Tutorial>> findByAuthor() {
-//
-//    }
+    @GetMapping("/findauthor")
+    @ResponseStatus(code=HttpStatus.OK)
+    public List<Article> findAuthor(@RequestParam String author){
+        return articleRepository.findArticlesByUserUsername(author);
+    }
 
 }

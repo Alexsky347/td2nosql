@@ -8,6 +8,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
+import java.util.HashMap;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/authenticate")
@@ -19,10 +22,7 @@ public class AuthController {
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.OK)
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
-        System.out.println("TAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(authRequest.getUsername());
-        System.out.println(authRequest.getPassword());
+    public Serializable generateToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
@@ -31,6 +31,9 @@ public class AuthController {
             System.out.println(ex);
             return "invalid username/password";
         }
-        return jwtUtil.generateToken(authRequest.getUsername());
+        HashMap<String, String> map = new HashMap<>();
+        map.put("token", jwtUtil.generateToken(authRequest.getUsername()));
+
+        return map;
     }
 }
