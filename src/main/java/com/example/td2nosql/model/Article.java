@@ -19,15 +19,18 @@ public class Article {
 
     private Date created;
 
+    private Integer dateCitation;
+
     @DBRef
     private User user;
 
-    public Article(String author, String title, String description, User user) {
+    public Article(String author, String title, String description, Integer dateCitation, User user) {
         this.author = author;
         this.title = title;
         this.description = description;
         this.visible = true;
         this.created = new Date();
+        this.dateCitation = dateCitation;
         this.user = user;
     }
     public Article(){}
@@ -77,6 +80,13 @@ public class Article {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getDateCitation(){
+        return dateCitation;
+    }
+    public void setDateCitation(Integer dateOfcitation){
+        this.dateCitation = dateOfcitation;
     }
 
     public String getAuthor() {

@@ -33,7 +33,7 @@ public class ArticleController extends Exception{
     @PostMapping("/articles")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Article createArticle(@RequestBody Article articleArg) {
-        return articleRepository.save(new Article(articleArg.getAuthor(), articleArg.getTitle(), articleArg.getDescription(), articleArg.getUser()));
+        return articleRepository.save(new Article(articleArg.getAuthor(), articleArg.getTitle(), articleArg.getDescription(), articleArg.getDateCitation(), articleArg.getUser()));
     }
 
     @PutMapping("/articles/{id}")
