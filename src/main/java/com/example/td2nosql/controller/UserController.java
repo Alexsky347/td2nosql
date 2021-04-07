@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class UserController extends Exception{
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/user")
     @ResponseStatus(code = HttpStatus.OK)
@@ -47,15 +43,6 @@ public class UserController extends Exception{
         return userRepository.findByUsername(username);
     }
 
-    @PostMapping("/users")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(new User(
-                user.getUsername(),
-                user.getEmail(),
-                passwordEncoder.encode(user.getPassword())
-                ));
-    }
 
     @PutMapping("/users/{id}")
     @ResponseStatus(code = HttpStatus.CREATED)

@@ -11,7 +11,6 @@ import com.example.td2nosql.repository.ArticleRepository;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class ArticleController extends Exception{
@@ -34,7 +33,7 @@ public class ArticleController extends Exception{
         return articleRepository.findById(id);
     }
 
-    @PostMapping("/articles")
+    @PostMapping("/add_article")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Article createArticle(Authentication authentication, @RequestBody Article articleArg) {
         User user = userRepository.findByUsername(authentication.getName());

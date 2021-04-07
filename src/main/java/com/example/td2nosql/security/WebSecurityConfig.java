@@ -6,16 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
@@ -26,14 +31,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Disable CSRF (cross site request forgery)
     http.csrf().disable();
+    http.cors().configurationSource(new CorsConfigurationSource() {
+      @Override
+      public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+        return new CorsConfiguration().applyPermitDefaultValues();
+      }
+    });
 
     // No session will be created or used by spring security
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // Entry points
     http.authorizeRequests()//
-        .antMatchers("/api/login").permitAll()
-        .antMatchers(HttpMethod.POST, "/api/users").anonymous()
+        .antMatchers("/api/login", "/api/register").permitAll()
         .antMatchers(HttpMethod.GET, "/api/articles").anonymous()
         // Disallow everything else..
         .anyRequest().authenticated();
@@ -45,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
 
     // Optional, if you want to test the API from a browser
-    // http.httpBasic();
+     http.httpBasic();
   }
 
   @Bean
