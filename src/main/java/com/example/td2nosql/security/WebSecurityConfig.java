@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Disable CSRF (cross site request forgery)
     http.csrf().disable();
+    
     http.cors().configurationSource(new CorsConfigurationSource() {
       @Override
       public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
