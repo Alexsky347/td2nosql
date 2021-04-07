@@ -1,9 +1,10 @@
 package com.example.td2nosql.controller;
 import com.example.td2nosql.model.Article;
 import com.example.td2nosql.model.User;
+import com.example.td2nosql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import com.example.td2nosql.repository.ArticleRepository;
 
@@ -17,6 +18,9 @@ public class ArticleController extends Exception{
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/articles")
     @ResponseStatus(code = HttpStatus.OK)
@@ -32,8 +36,9 @@ public class ArticleController extends Exception{
 
     @PostMapping("/articles")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Article createArticle(@RequestBody Article articleArg) {
-        return articleRepository.save(new Article(articleArg.getAuthor(), articleArg.getTitle(), articleArg.getDescription(), articleArg.getDateCitation(), articleArg.getUser()));
+    public Article createArticle(Authentication authentication, @RequestBody Article articleArg) {
+        User user = userRepository.findByUsername(authentication.getName());
+        return articleRepository.save(new Article(articleArg.getAuthor(), articleArg.getTitle(), articleArg.getDescription(), articleArg.getDateCitation(),  user));
     }
 
     @PutMapping("/articles/{id}")

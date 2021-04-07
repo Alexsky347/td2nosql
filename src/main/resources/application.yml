@@ -1,12 +1,11 @@
-#server:
-#  port: 8080
-#  servlet:
-#    context-path: /resource-server
-#
-#spring:
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://localhost:8083/auth/realms/baeldung
-#          jwk-set-uri: http://localhost:8083/auth/realms/baeldung/protocol/openid-connect/certs
+server:
+  port: 8080 # This is the default port anyway, but you can change it here
+  #  servlet:
+  #    context-path: /resource-server
+
+security:
+  jwt:
+    token:
+      secret-key: "fijgfjdufighuidfhguhuiojfdsqpl@usqbfdsyb"
+      expire-length: 300000
+

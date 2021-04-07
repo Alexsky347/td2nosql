@@ -47,8 +47,7 @@ public class UserController extends Exception{
         return userRepository.save(new User(
                 user.getUsername(),
                 user.getEmail(),
-                passwordEncoder.encode(user.getPassword()),
-                user.getRole()
+                passwordEncoder.encode(user.getPassword())
                 ));
     }
 
