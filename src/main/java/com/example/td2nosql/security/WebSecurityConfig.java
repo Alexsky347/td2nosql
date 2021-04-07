@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()//
         .antMatchers("/api/login", "/api/register").permitAll()
         .antMatchers(HttpMethod.GET, "/api/articles").anonymous()
+            .antMatchers(HttpMethod.GET, "/api/articles/{id}").anonymous()
         // Disallow everything else..
         .anyRequest().authenticated();
 
