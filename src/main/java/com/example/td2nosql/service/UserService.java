@@ -1,6 +1,4 @@
 package com.example.td2nosql.service;
-
-import com.example.td2nosql.exception.CustomException;
 import com.example.td2nosql.model.User;
 import com.example.td2nosql.repository.UserRepository;
 import com.example.td2nosql.security.JwtTokenProvider;
@@ -12,9 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
@@ -32,7 +32,8 @@ public class UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public HashMap<String, String> login(String username, String password) {
+    public Map<String, String> login(String username, String password) {
+
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -40,7 +41,7 @@ public class UserService {
             map.put("token", jwtTokenProvider.createToken(username));
             return map;
         } catch (Exception e) {
-            throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
     }
 
@@ -51,7 +52,7 @@ public class UserService {
             return jwtTokenProvider.createToken(user.getUsername());
 
         } else {
-            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Utilisateur déjà utilisé");
         }
     }
 
@@ -62,7 +63,7 @@ public class UserService {
     public User search(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
         return user;
     }

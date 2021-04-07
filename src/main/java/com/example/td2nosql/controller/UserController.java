@@ -3,6 +3,7 @@ import com.example.td2nosql.model.User;
 import com.example.td2nosql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,12 @@ public class UserController extends Exception{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    @GetMapping("/user")
+    @ResponseStatus(code = HttpStatus.OK)
+    public User getUser(Authentication authentication) {
+        System.out.println(userRepository.findByUsername(authentication.getName()));
+        return userRepository.findByUsername(authentication.getName());
+    }
 
     @GetMapping("/users")
     @ResponseStatus(code = HttpStatus.OK)

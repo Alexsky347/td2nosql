@@ -1,9 +1,8 @@
 package com.example.td2nosql.security;
-
-import com.example.td2nosql.exception.CustomException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,10 +28,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         Authentication auth = jwtTokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
       }
-    } catch (CustomException ex) {
+    } catch (ResponseStatusException ex) {
       //this is very important, since it guarantees the user is not authenticated at all
       SecurityContextHolder.clearContext();
-      httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
+      httpServletResponse.sendError(ex.getStatus().value(), ex.getMessage());
       return;
     }
 
